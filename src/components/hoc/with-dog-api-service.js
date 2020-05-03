@@ -1,16 +1,16 @@
 import React from "react";
-import { dogApiConsumer } from "../dog-api-context";
+import { DogApiConsumer } from "../dog-api-context";
 
-const withDogApiSerivce = (Wrapped) => {
+const withDogApiService = (Wrapped) => {
   return (props) => {
     return (
-      <dogApiConsumer>
+      <DogApiConsumer>
         {(dogApiService) => {
           return <Wrapped {...props} dogApiService={dogApiService} />;
         }}
-      </dogApiConsumer>
+      </DogApiConsumer>
     );
   };
 };
 
-export default withDogApiSerivce;
+export default withDogApiService;
