@@ -4,7 +4,47 @@ const initialState = {
   dogsImagesCurrentPage: 1,
   dogsImagesTotalPages: null,
   dogsImagesLength: null,
+  breedList: [],
 };
+
+const transformDogsImages = (dogsImages) => {
+  // check in LS
+  let newDogsImages = dogsImages.map((item) => {
+    return {
+      src: item,
+      isFavorite: false,
+    };
+  });
+
+  return newDogsImages;
+};
+
+const getBreedListWithCapitalLetters = (breedList) => {
+  let capitalLetter = "";
+  let breedListWithCapitalLetters = breedList.slice();
+
+  breedListWithCapitalLetters = breedListWithCapitalLetters.map((item) => {
+    return {
+      value: item,
+      isCapitalLetter: false,
+    };
+  });
+
+  for (let i = 0; i < breedListWithCapitalLetters.length; i++) {
+    let letter = {
+      value: breedListWithCapitalLetters[i].value[0].toUpperCase(),
+      isCapitalLetter: true,
+    };
+    if (letter.value !== capitalLetter) {
+      capitalLetter = letter.value;
+      breedListWithCapitalLetters.splice(i, 0, letter);
+    }
+  }
+  capitalLetter = "";
+
+  return breedListWithCapitalLetters;
+}
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -21,7 +61,12 @@ const reducer = (state = initialState, action) => {
     case "DOGS_IMAGES_GETTED":
       return {
         ...state,
-        dogsImages: action.payload,
+        dogsImages: transformDogsImages(action.payload),
+      };
+    case "BREED_LIST_GETTED":
+      return {
+        ...state,
+        breedList: getBreedListWithCapitalLetters(action.payload),
       };
     default:
       return state;

@@ -17,9 +17,21 @@ const getDogsImages = (img) => {
   }
 }
 
+const getBreedList = (breedList) => {
+  return {
+    type: "BREED_LIST_GETTED",
+    payload: breedList,
+  };
+};
+
+const fetchBreedList = (dispatch, dogApiService) => () => {
+  dogApiService.getAllBreedsList()
+  .then((res) => dispatch(getBreedList(Object.keys(res.message))));
+}
 
 export {
   toHomePage,
   getDogsImagesConfig,
   getDogsImages,
+  fetchBreedList,
 }
