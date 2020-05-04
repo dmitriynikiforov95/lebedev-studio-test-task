@@ -16,6 +16,13 @@ const getDogsImages = (img) => {
       payload: img
   }
 }
+const getNewDogsImages = (img) => {
+  return {
+      type: "NEW_DOGS_IMAGES_GETTED",
+      payload: img
+  }
+}
+
 
 const getBreedList = (breedList) => {
   return {
@@ -23,6 +30,11 @@ const getBreedList = (breedList) => {
     payload: breedList,
   };
 };
+const changeDogsImagesCurrentPage = () => {
+  return {
+      type: "CHANGE_DOGS_IMAGES_CURRENT_PAGE"
+  }
+}
 
 const fetchBreedList = (dispatch, dogApiService) => () => {
   dogApiService.getAllBreedsList()
@@ -33,5 +45,7 @@ export {
   toHomePage,
   getDogsImagesConfig,
   getDogsImages,
+  getNewDogsImages,
   fetchBreedList,
+  changeDogsImagesCurrentPage,
 }

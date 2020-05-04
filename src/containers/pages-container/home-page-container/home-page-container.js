@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compareRandom } from "../../../helper";
-import { getDogsImagesConfig, getDogsImages } from "../../../actions";
+import { getDogsImagesConfig, getDogsImages, getNewDogsImages, changeDogsImagesCurrentPage} from "../../../actions";
 
 import HomePage from "../../../components/pages/home-page";
 import withDogApiService from "../../../components/hoc";
+import DogCardList from "../../../components/dog-card-list";
 
+import InfiniteScroll from 'react-infinite-scroll-component';
 class HomePageContainer extends Component {
+  state = {
+    hasMore: true,
+  };
 
   getCurrentDogsImages = (images, getNewImages) => {
     const { dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
@@ -39,13 +44,43 @@ class HomePageContainer extends Component {
     });
   };
 
+  fetchMoreData = () => {
+    const {
+      dogsImages,
+      dogsImagesTotalLength,
+      changeDogsImagesCurrentPage,
+      getNewDogsImages,
+    } = this.props;
+
+    if (dogsImages.length >= dogsImagesTotalLength) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    changeDogsImagesCurrentPage();
+    this.getDogsImages(getNewDogsImages);
+  };
+
   componentDidMount() {
     const { getDogsImages } = this.props;
     this.getDogsImages(getDogsImages);
   }
 
   render() {
-    return <HomePage />;
+    const { dogsImages } = this.props;
+    return (
+      <div>
+        <HomePage />
+        <InfiniteScroll
+          dataLength={dogsImages.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.hasMore}
+          scrollThreshold={"5px"}
+          loader={<h4>Loading...</h4>}
+        >
+          <DogCardList dogsImages={dogsImages} />
+        </InfiniteScroll>
+      </div>
+    );
   }
 }
 
@@ -54,18 +89,22 @@ const mapStateToProps = ({
   dogsImagesTotalPages,
   dogsImagesPerPage,
   dogsImagesCurrentPage,
+  dogsImagesTotalLength,
 }) => {
   return {
     dogsImages,
     dogsImagesTotalPages,
     dogsImagesPerPage,
     dogsImagesCurrentPage,
+    dogsImagesTotalLength,
   };
 };
 
 const mapDispatchToProps = {
   getDogsImagesConfig,
   getDogsImages,
+  getNewDogsImages,
+  changeDogsImagesCurrentPage,
 };
 
 export default withDogApiService(

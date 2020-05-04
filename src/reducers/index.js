@@ -3,7 +3,7 @@ const initialState = {
   dogsImagesPerPage: 20,
   dogsImagesCurrentPage: 1,
   dogsImagesTotalPages: null,
-  dogsImagesLength: null,
+  dogsImagesTotalLength: null,
   breedList: [],
 };
 
@@ -43,8 +43,13 @@ const getBreedListWithCapitalLetters = (breedList) => {
   capitalLetter = "";
 
   return breedListWithCapitalLetters;
-}
+};
 
+const changeCurrentPage = (state) => {
+  if (state.dogsImagesCurrentPage === state.dogsImagesTotalPages)
+    return state.dogsImagesCurrentPage;
+  return state.dogsImagesCurrentPage + 1;
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,7 +58,7 @@ const reducer = (state = initialState, action) => {
     case "DOGS_IMAGES_CONFING_GETTED":
       return {
         ...state,
-        dogsImagesLength: action.payload.length,
+        dogsImagesTotalLength: action.payload.length,
         dogsImagesTotalPages: Math.round(
           action.payload.length / state.dogsImagesPerPage
         ),
@@ -63,10 +68,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         dogsImages: transformDogsImages(action.payload),
       };
+    case "NEW_DOGS_IMAGES_GETTED":
+      return {
+        ...state,
+        dogsImages: [
+          ...state.dogsImages,
+          ...transformDogsImages(action.payload),
+        ],
+      };
     case "BREED_LIST_GETTED":
       return {
         ...state,
         breedList: getBreedListWithCapitalLetters(action.payload),
+      };
+    case "CHANGE_DOGS_IMAGES_CURRENT_PAGE":
+      return {
+        ...state,
+        dogsImagesCurrentPage: changeCurrentPage(state, action.payload),
       };
     default:
       return state;
