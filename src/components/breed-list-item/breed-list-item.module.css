@@ -1,0 +1,29 @@
+.capitalLetter {
+    margin-right: 15px;
+    margin-left: 35px;
+    font-size: 20px;
+    line-height: 28px;
+    border: none;
+}
+
+li:first-child .capitalLetter {
+    margin-left: 0px;
+}
+
+.link {
+    margin-right:15px;
+    padding: 4px 12px;
+    border: 1px solid #626262;
+    border-radius: 20px;
+    text-align:center;
+
+    text-decoration: none;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+.link:hover {
+    color: #3C59F0;
+    border: 1px solid #3C59F0;
+} 
