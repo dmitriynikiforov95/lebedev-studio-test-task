@@ -1,0 +1,15 @@
+.react-switch {
+    border:1px solid #626262;
+}
+.react-switch.active {
+    border:1px solid #3C59F0;
+}
+
+.react-switch-bg {
+    background:none !important;
+}
+
+.text-active {
+    color:#3C59F0;
+}
+

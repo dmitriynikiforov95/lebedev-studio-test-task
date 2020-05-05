@@ -13,16 +13,18 @@ const DogCardItem = ({ dogImage, addDogImageToFavorites }) => {
     };
     addDogImageToFavorites(dogImage);
   };
+  let breedName = src.match(/.*\/(.*)\/(.*)$/)[1];
 
   return (
     <div className={s.container}>
-      <img className={s.dogImg} src={`${src}`} alt="dog image" />
+      <img className={s.dogImg} src={`${src}`} alt="dog" />
       <img
         className={s.favoriteIcon}
         src={isFavorite ? active : inactive}
         alt="favortie icon"
         onClick={() => addToFavorites(src)}
       />
+        <b className={s.breedName}>{breedName}</b>
     </div>
   );
 };

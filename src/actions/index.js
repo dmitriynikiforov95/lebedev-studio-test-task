@@ -3,6 +3,7 @@ const toHomePage = () => {
     type: "LINK_TO_HOMEPAGE_CLICKED"
   }
 }
+
 const getDogsImagesConfig = (img) => {
   return {
     type: "DOGS_IMAGES_CONFING_GETTED",
@@ -65,6 +66,11 @@ const getNewDogsImagesFromLS = (img) => {
   }
 }
 
+const changeDogsImagesSortValue = () => {
+  return {
+    type: "DOGS_IMAGES_VALUE_CHANGED"
+  }
+}
 const fetchBreedList = (dispatch, dogApiService) => () => {
   dogApiService.getAllBreedsList()
   .then((res) => dispatch(getBreedList(Object.keys(res.message))));
@@ -81,4 +87,5 @@ export {
   addDogImageToFavorites,
   getDogsImagesFromLS,
   getNewDogsImagesFromLS,
+  changeDogsImagesSortValue,
 }

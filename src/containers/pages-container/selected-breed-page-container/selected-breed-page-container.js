@@ -5,7 +5,7 @@ import { getDogsImagesConfig, getDogsImages, getNewDogsImages, changeDogsImagesC
 
 import SelectedBreedPage from "../../../components/pages/selected-breed-page";
 import withDogApiService from "../../../components/hoc";
-import DogCardList from "../../../components/dog-card-list";
+import DogCardListContainer from "../../dog-card-list-container";
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -79,7 +79,7 @@ class SelectedBreedPageContainer extends Component {
           scrollThreshold={"5px"}
           loader={<h4>Loading...</h4>}
         >
-          <DogCardList dogsImages={dogsImages} />
+          <DogCardListContainer dogsImages={dogsImages} />
         </InfiniteScroll>
       </div>
     );

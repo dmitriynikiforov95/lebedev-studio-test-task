@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchBreedList } from "../../actions";
 import withDogApiService from "../../components/hoc";
 import BreedListContainer from "../breed-list-container";
+import SwitchBtnContainer from "../switch-btn-container";
 
 class BreedsSelectorContainer extends Component {
   state = {
@@ -23,16 +24,24 @@ class BreedsSelectorContainer extends Component {
 
   render() {
     const { isBreedListOpened } = this.state;
+    const {selectedBreed} = this.props;
     return (
       <div>
         <button type="button" onClick={this.openBreedList}>
           Породы
         </button>
         {isBreedListOpened && <BreedListContainer />}
+        {!selectedBreed && <SwitchBtnContainer />}
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ selectedBreed }) => {
+  return {
+    selectedBreed,
+  };
+};
 
 const mapDispatchToProps = (dispatch, { dogApiService }) => {
   return {
@@ -41,5 +50,5 @@ const mapDispatchToProps = (dispatch, { dogApiService }) => {
 };
 
 export default withDogApiService(
-  connect(null, mapDispatchToProps)(BreedsSelectorContainer)
+  connect(mapStateToProps, mapDispatchToProps)(BreedsSelectorContainer)
 );

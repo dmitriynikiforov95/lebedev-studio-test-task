@@ -8,7 +8,7 @@ import {
   changeDogsImagesCurrentPage,
 } from "../../../actions";
 
-import DogCardsList from "../../../components/dog-card-list";
+import DogCardListContainer from "../../dog-card-list-container";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -79,7 +79,7 @@ class SelectedBreedPageContainer extends Component {
         scrollThreshold={"5px"}
         loader={<h4>Loading...</h4>}
       >
-        <DogCardsList dogsImages={favoriteDogsImages} />
+        <DogCardListContainer dogsImages={favoriteDogsImages} />
       </InfiniteScroll>
     );
 

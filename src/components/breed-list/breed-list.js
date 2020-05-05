@@ -1,7 +1,7 @@
 import React from "react";
 import BreedListItemContainer from "../../containers/breed-list-item-container";
 import s from "./breed-list.module.css"
-const BreedList = ({ breedList, selectBreed }) => {
+const BreedList = ({ breedList }) => {
   return (
     <ul className={s.list}>
       {breedList.map((item, idx) => {

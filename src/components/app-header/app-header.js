@@ -6,11 +6,10 @@ import appLogo from "./app-logo.png";
 import favoritesIcon from "./favorites-icon.png";
 
 const AppHeader = ({toHomePage}) => {
-
   return (
     <header className={s.header}>
       <div className={s.container}>
-        <Link to="/" onClick={() => toHomePage()}>
+      <Link to="/" onClick={toHomePage}>
           <img src={appLogo} alt="app-logo" />
         </Link>
         <div>

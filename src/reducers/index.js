@@ -7,6 +7,7 @@ const initialState = {
   breedList: [],
   selectedBreed: null,
   favoriteDogsImages: [],
+  isSortDogsImagesAlphabetically: false,
 };
 
 const transformDogsImages = (dogsImages) => {
@@ -131,14 +132,6 @@ const addDogImageToLocalStorage = (state, card) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LINK_TO_HOMEPAGE_CLICKED":
-      return {
-        ...state,
-        selectedBreed: null,
-        dogsImagesCurrentPage: 1,
-        dogsImagesTotalPages: null,
-        dogsImagesTotalLength: null,
-      };
     case "DOGS_IMAGES_CONFING_GETTED":
       return {
         ...state,
@@ -191,6 +184,19 @@ const reducer = (state = initialState, action) => {
         ...state,
         favoriteDogsImages: [...state.favoriteDogsImages, ...action.payload],
       };
+    case "DOGS_IMAGES_VALUE_CHANGED":
+      return {
+        ...state,
+        isSortDogsImagesAlphabetically: !state.isSortDogsImagesAlphabetically,
+      };
+      case "LINK_TO_HOMEPAGE_CLICKED":
+        return {
+          ...state,
+          selectedBreed: null,
+          dogsImagesCurrentPage: 1,
+          dogsImagesTotalPages: null,
+          dogsImagesTotalLength: null,
+        };
     default:
       return state;
   }

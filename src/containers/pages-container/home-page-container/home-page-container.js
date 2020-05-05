@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { compareRandom } from "../../../helper";
-import { getDogsImagesConfig, getDogsImages, getNewDogsImages, changeDogsImagesCurrentPage} from "../../../actions";
+import { compareRandom, sortAlphabetically } from "../../../helper";
+import {
+  getDogsImagesConfig,
+  getDogsImages,
+  getNewDogsImages,
+  changeDogsImagesCurrentPage,
+} from "../../../actions";
 
 import HomePage from "../../../components/pages/home-page";
 import withDogApiService from "../../../components/hoc";
-import DogCardList from "../../../components/dog-card-list";
+import DogCardListContainer from "../../dog-card-list-container";
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 class HomePageContainer extends Component {
   state = {
     hasMore: true,
@@ -77,10 +82,20 @@ class HomePageContainer extends Component {
           scrollThreshold={"5px"}
           loader={<h4>Loading...</h4>}
         >
-          <DogCardList dogsImages={dogsImages} />
+          <DogCardListContainer dogsImages={dogsImages} />
         </InfiniteScroll>
       </div>
     );
+  }
+}
+
+function sortDogImages(dogsImages, isSortAlphabetically) {
+  let images = dogsImages.slice();
+
+  if (isSortAlphabetically) {
+    return images.sort(sortAlphabetically);
+  } else {
+    return images;
   }
 }
 
@@ -90,9 +105,10 @@ const mapStateToProps = ({
   dogsImagesPerPage,
   dogsImagesCurrentPage,
   dogsImagesTotalLength,
+  isSortDogsImagesAlphabetically,
 }) => {
   return {
-    dogsImages,
+    dogsImages: sortDogImages(dogsImages, isSortDogsImagesAlphabetically),
     dogsImagesTotalPages,
     dogsImagesPerPage,
     dogsImagesCurrentPage,

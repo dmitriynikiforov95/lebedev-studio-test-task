@@ -22,3 +22,10 @@
     top:0;
     left:0;
 }
+
+.breedName {
+    position: absolute;
+    color: #ffffff;
+    bottom:0;
+    right:0;
+  }
