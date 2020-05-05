@@ -43,6 +43,15 @@ const selectBreed = (breed) => {
   }
 }
 
+// add dog images to ls logic
+
+const addDogImageToFavorites = (dogImage) => {
+  return {
+    type:"DOG_IMAGE_ADDED_TO_FAVORITES",
+    payload:dogImage,
+  }
+}
+
 const fetchBreedList = (dispatch, dogApiService) => () => {
   dogApiService.getAllBreedsList()
   .then((res) => dispatch(getBreedList(Object.keys(res.message))));
@@ -56,4 +65,5 @@ export {
   fetchBreedList,
   changeDogsImagesCurrentPage,
   selectBreed,
+  addDogImageToFavorites,
 }
