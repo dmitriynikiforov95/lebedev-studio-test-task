@@ -2,11 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./breed-list-item.module.css";
 
-const BreedListItem = ({ breed }) => {
+const BreedListItem = ({ breed, selectBreed }) => {
   const { value, isCapitalLetter } = breed;
 
   const link = (
-    <Link className={s.link} to={`/${value}`}>
+    <Link
+      onClick={() => selectBreed(value)}
+      className={s.link}
+      to={`/${value}`}
+    >
       {value}
     </Link>
   );

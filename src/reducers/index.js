@@ -5,6 +5,7 @@ const initialState = {
   dogsImagesTotalPages: null,
   dogsImagesTotalLength: null,
   breedList: [],
+  selectedBreed:null,
 };
 
 const transformDogsImages = (dogsImages) => {
@@ -54,7 +55,13 @@ const changeCurrentPage = (state) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "LINK_TO_HOMEPAGE_CLICKED":
-      return { ...state };
+      return {
+        ...state,
+        selectedBreed: null,
+        dogsImagesCurrentPage: 1,
+        dogsImagesTotalPages: null,
+        dogsImagesTotalLength: null,
+      };
     case "DOGS_IMAGES_CONFING_GETTED":
       return {
         ...state,
@@ -85,6 +92,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         dogsImagesCurrentPage: changeCurrentPage(state, action.payload),
+      };
+    case "BREED_SELECTED":
+      return {
+        ...state,
+        selectedBreed: action.payload,
       };
     default:
       return state;

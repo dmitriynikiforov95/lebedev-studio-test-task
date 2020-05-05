@@ -27,12 +27,19 @@ const getNewDogsImages = (img) => {
 const getBreedList = (breedList) => {
   return {
     type: "BREED_LIST_GETTED",
-    payload: breedList,
+    payload: breedList
   };
 };
 const changeDogsImagesCurrentPage = () => {
   return {
       type: "CHANGE_DOGS_IMAGES_CURRENT_PAGE"
+  }
+}
+
+const selectBreed = (breed) => {
+  return {
+    type: "BREED_SELECTED",
+    payload:breed
   }
 }
 
@@ -48,4 +55,5 @@ export {
   getNewDogsImages,
   fetchBreedList,
   changeDogsImagesCurrentPage,
+  selectBreed,
 }

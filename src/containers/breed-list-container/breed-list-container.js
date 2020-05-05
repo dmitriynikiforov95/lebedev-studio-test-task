@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+
+
 import BreedList from "../../components/breed-list";
 
 const BreedListContainer = ({ breedList }) => {
   return (
-    <BreedList breedList={breedList} />
+    <BreedList breedList={breedList}/>
   );
 };
 
