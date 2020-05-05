@@ -51,6 +51,19 @@ const addDogImageToFavorites = (dogImage) => {
     payload:dogImage,
   }
 }
+const getDogsImagesFromLS = (img) => {
+  return {
+      type: "DOGS_IMAGES_FROM_LS_GETTED",
+      payload: img
+  }
+}
+
+const getNewDogsImagesFromLS = (img) => {
+  return {
+      type: "NEW_DOGS_IMAGES_FROM_LS_GETTED",
+      payload: img
+  }
+}
 
 const fetchBreedList = (dispatch, dogApiService) => () => {
   dogApiService.getAllBreedsList()
@@ -66,4 +79,6 @@ export {
   changeDogsImagesCurrentPage,
   selectBreed,
   addDogImageToFavorites,
+  getDogsImagesFromLS,
+  getNewDogsImagesFromLS,
 }

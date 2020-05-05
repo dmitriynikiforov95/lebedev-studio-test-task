@@ -10,6 +10,7 @@ import DogCardList from "../../../components/dog-card-list";
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 class SelectedBreedPageContainer extends Component {
+  
   state = {
     hasMore: true,
   };

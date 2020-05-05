@@ -5,8 +5,8 @@ const initialState = {
   dogsImagesTotalPages: null,
   dogsImagesTotalLength: null,
   breedList: [],
-  selectedBreed:null,
-  favoriteDogsImages: []
+  selectedBreed: null,
+  favoriteDogsImages: [],
 };
 
 const transformDogsImages = (dogsImages) => {
@@ -54,10 +54,10 @@ const changeCurrentPage = (state) => {
 };
 
 const addDogImageToFavorite = (state, dogImage) => {
-  const idx = state.dogsImages.findIndex((item) => item.src == dogImage.src);
+  const idx = state.dogsImages.findIndex((item) => item.src === dogImage.src);
 
   const isCardFavorite = state.dogsImages.findIndex(
-    (item) => item.src == dogImage.src && item.isFavorite == true
+    (item) => item.src === dogImage.src && item.isFavorite === true
   );
   let newDogImage;
 
@@ -82,10 +82,14 @@ const addDogImageToFavorite = (state, dogImage) => {
 const addDogImageToLocalStorage = (state, card) => {
   let newFavoriteDogsImages = [...state.favoriteDogsImages];
   if (localStorage.hasOwnProperty("favoriteDogsImages")) {
-    let favoriteDogsImages = JSON.parse(localStorage.getItem("favoriteDogsImages"));
+    let favoriteDogsImages = JSON.parse(
+      localStorage.getItem("favoriteDogsImages")
+    );
 
     // Проверим ЛС на присутствие карты
-    const hasInLC = favoriteDogsImages.findIndex((item) => item.src === card.src);
+    const hasInLC = favoriteDogsImages.findIndex(
+      (item) => item.src === card.src
+    );
 
     // Проверим стор
     const hasInStore = state.favoriteDogsImages.findIndex(
@@ -101,19 +105,25 @@ const addDogImageToLocalStorage = (state, card) => {
       favoriteDogsImages.push(card);
     }
 
-    if(hasInStore !== -1) {
+    if (hasInStore !== -1) {
       newFavoriteDogsImages = [
         ...newFavoriteDogsImages.slice(0, hasInStore),
         ...newFavoriteDogsImages.slice(hasInStore + 1),
       ];
     } else {
-      newFavoriteDogsImages.push(card)
+      newFavoriteDogsImages.push(card);
     }
-    localStorage.setItem("favoriteDogsImages", JSON.stringify(favoriteDogsImages));
+    localStorage.setItem(
+      "favoriteDogsImages",
+      JSON.stringify(favoriteDogsImages)
+    );
     return newFavoriteDogsImages;
   } else {
     let favoriteDogsImages = [card];
-    localStorage.setItem("favoriteDogsImages", JSON.stringify(favoriteDogsImages));
+    localStorage.setItem(
+      "favoriteDogsImages",
+      JSON.stringify(favoriteDogsImages)
+    );
     newFavoriteDogsImages.push(card);
     return newFavoriteDogsImages;
   }
@@ -170,6 +180,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         dogsImages: addDogImageToFavorite(state, action.payload),
         favoriteDogsImages: addDogImageToLocalStorage(state, action.payload),
+      };
+    case "DOGS_IMAGES_FROM_LS_GETTED":
+      return {
+        ...state,
+        favoriteDogsImages: action.payload,
+      };
+    case "NEW_DOGS_IMAGES_FROM_LS_GETTED":
+      return {
+        ...state,
+        favoriteDogsImages: [...state.favoriteDogsImages, ...action.payload],
       };
     default:
       return state;
