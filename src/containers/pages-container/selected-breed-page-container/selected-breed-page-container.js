@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { getCurrentDogsImages } from "../../../helper";
 import { getDogsImagesConfig, getDogsImages, getNewDogsImages, changeDogsImagesCurrentPage} from "../../../actions";
 
 import SelectedBreedPage from "../../../components/pages/selected-breed-page";
@@ -15,16 +15,8 @@ class SelectedBreedPageContainer extends Component {
     hasMore: true,
   };
 
-  getCurrentDogsImages = (images, getNewImages) => {
-    const { dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
-    let indexOfLastItem = dogsImagesCurrentPage * dogsImagesPerPage;
-    let indexOfFirstItem = indexOfLastItem - dogsImagesPerPage;
-    let dogsImages = images.slice(indexOfFirstItem, indexOfLastItem);
-    return getNewImages(dogsImages);
-  };
-
   getDogsImages = (getImages) => {
-    const { dogApiService, getDogsImagesConfig } = this.props;
+    const { dogApiService, getDogsImagesConfig, dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
 
     let breed = window.location.href.match(/.*\/(.*)\/(.*)$/)[2];
 
@@ -35,7 +27,7 @@ class SelectedBreedPageContainer extends Component {
         return res.message;
       })
       .then((res) => {
-        return this.getCurrentDogsImages(res, getImages);
+        return getCurrentDogsImages(res, getImages, dogsImagesCurrentPage, dogsImagesPerPage);
       });
   };
 

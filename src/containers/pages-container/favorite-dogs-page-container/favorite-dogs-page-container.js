@@ -8,6 +8,8 @@ import {
   changeDogsImagesCurrentPage,
 } from "../../../actions";
 
+import { getCurrentDogsImages } from "../../../helper";
+
 import DogCardListContainer from "../../dog-card-list-container";
 
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -17,15 +19,8 @@ class SelectedBreedPageContainer extends Component {
     hasMore: true,
   };
 
-  getCurrentDogsImages = (images, getNewImages) => {
-    const { dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
-    let indexOfLastItem = dogsImagesCurrentPage * dogsImagesPerPage;
-    let indexOfFirstItem = indexOfLastItem - dogsImagesPerPage;
-    let dogsImages = images.slice(indexOfFirstItem, indexOfLastItem);
-    return getNewImages(dogsImages);
-  };
-
   getDogsImages = (getNewImages) => {
+    const {  dogsImagesCurrentPage, dogsImagesPerPage} = this.props;
     if (localStorage.hasOwnProperty("favoriteDogsImages")) {
       const favoriteDogsImages = JSON.parse(
         localStorage.getItem("favoriteDogsImages")
@@ -33,7 +28,7 @@ class SelectedBreedPageContainer extends Component {
       // refactoring
       if (favoriteDogsImages.length > 0) {
         this.props.getDogsImagesConfig(favoriteDogsImages);
-        this.getCurrentDogsImages(favoriteDogsImages, getNewImages);
+        getCurrentDogsImages(favoriteDogsImages, getNewImages, dogsImagesCurrentPage, dogsImagesPerPage);
       } else {
         this.setState({ hasMore: false });
       }

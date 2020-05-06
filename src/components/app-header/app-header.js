@@ -5,7 +5,7 @@ import s from "./app-header.module.css";
 import appLogo from "./app-logo.png";
 import favoritesIcon from "./favorites-icon.png";
 
-const AppHeader = ({toHomePage}) => {
+const AppHeader = ({toHomePage, toFavoriteDogsPage}) => {
   return (
     <header className={s.header}>
       <div className={s.container}>
@@ -14,7 +14,7 @@ const AppHeader = ({toHomePage}) => {
         </Link>
         <div>
           <span className={s.favoriteDogsLinkText}>Избранные песели</span>
-          <Link to="/favorites">
+          <Link to="/favorites" onClick={toFavoriteDogsPage}>
             <img src={favoritesIcon} alt="favorites-icon" />
           </Link>
         </div>

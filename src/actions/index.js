@@ -1,83 +1,94 @@
 const toHomePage = () => {
   return {
-    type: "LINK_TO_HOMEPAGE_CLICKED"
-  }
-}
+    type: "LINK_TO_HOMEPAGE_CLICKED",
+  };
+};
+
+const toFavoriteDogsPage = () => {
+  return {
+    type: "LINK_TO_FAVORITE_DOGS_PAGE_CLICKED",
+  };
+};
 
 const getDogsImagesConfig = (img) => {
   return {
     type: "DOGS_IMAGES_CONFING_GETTED",
-    payload: img
-  }
-}
+    payload: img,
+  };
+};
 
 const getDogsImages = (img) => {
   return {
-      type: "DOGS_IMAGES_GETTED",
-      payload: img
-  }
-}
+    type: "DOGS_IMAGES_GETTED",
+    payload: img,
+  };
+};
+
 const getNewDogsImages = (img) => {
   return {
-      type: "NEW_DOGS_IMAGES_GETTED",
-      payload: img
-  }
-}
-
+    type: "NEW_DOGS_IMAGES_GETTED",
+    payload: img,
+  };
+};
 
 const getBreedList = (breedList) => {
   return {
     type: "BREED_LIST_GETTED",
-    payload: breedList
+    payload: breedList,
   };
 };
+
 const changeDogsImagesCurrentPage = () => {
   return {
-      type: "CHANGE_DOGS_IMAGES_CURRENT_PAGE"
-  }
-}
+    type: "CHANGE_DOGS_IMAGES_CURRENT_PAGE",
+  };
+};
 
 const selectBreed = (breed) => {
   return {
     type: "BREED_SELECTED",
-    payload:breed
-  }
-}
+    payload: breed,
+  };
+};
 
 // add dog images to ls logic
 
 const addDogImageToFavorites = (dogImage) => {
   return {
-    type:"DOG_IMAGE_ADDED_TO_FAVORITES",
-    payload:dogImage,
-  }
-}
+    type: "DOG_IMAGE_ADDED_TO_FAVORITES",
+    payload: dogImage,
+  };
+};
+
 const getDogsImagesFromLS = (img) => {
   return {
-      type: "DOGS_IMAGES_FROM_LS_GETTED",
-      payload: img
-  }
-}
+    type: "DOGS_IMAGES_FROM_LS_GETTED",
+    payload: img,
+  };
+};
 
 const getNewDogsImagesFromLS = (img) => {
   return {
-      type: "NEW_DOGS_IMAGES_FROM_LS_GETTED",
-      payload: img
-  }
-}
+    type: "NEW_DOGS_IMAGES_FROM_LS_GETTED",
+    payload: img,
+  };
+};
 
 const changeDogsImagesSortValue = () => {
   return {
-    type: "DOGS_IMAGES_VALUE_CHANGED"
-  }
-}
+    type: "DOGS_IMAGES_VALUE_CHANGED",
+  };
+};
+
 const fetchBreedList = (dispatch, dogApiService) => () => {
-  dogApiService.getAllBreedsList()
-  .then((res) => dispatch(getBreedList(Object.keys(res.message))));
-}
+  dogApiService
+    .getAllBreedsList()
+    .then((res) => dispatch(getBreedList(Object.keys(res.message))));
+};
 
 export {
   toHomePage,
+  toFavoriteDogsPage,
   getDogsImagesConfig,
   getDogsImages,
   getNewDogsImages,
@@ -88,4 +99,4 @@ export {
   getDogsImagesFromLS,
   getNewDogsImagesFromLS,
   changeDogsImagesSortValue,
-}
+};

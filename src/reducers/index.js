@@ -11,14 +11,26 @@ const initialState = {
 };
 
 const transformDogsImages = (dogsImages) => {
-  // check in LS
   let newDogsImages = dogsImages.map((item) => {
     return {
       src: item,
       isFavorite: false,
     };
   });
+  // Проверка в LocalStorage на присутствие изображения
+  if (localStorage.hasOwnProperty("favoriteDogsImages")) {
+    let favoriteDogsImages = JSON.parse(
+      localStorage.getItem("favoriteDogsImages")
+    );
 
+    for (let dogImage of newDogsImages) {
+      for (let dogImageInLocalStorage of favoriteDogsImages) {
+        if (dogImage.src === dogImageInLocalStorage.src) {
+          dogImage.isFavorite = dogImageInLocalStorage.isFavorite;
+        }
+      }
+    }
+  }
   return newDogsImages;
 };
 
@@ -190,6 +202,14 @@ const reducer = (state = initialState, action) => {
         isSortDogsImagesAlphabetically: !state.isSortDogsImagesAlphabetically,
       };
       case "LINK_TO_HOMEPAGE_CLICKED":
+        return {
+          ...state,
+          selectedBreed: null,
+          dogsImagesCurrentPage: 1,
+          dogsImagesTotalPages: null,
+          dogsImagesTotalLength: null,
+        };
+        case "LINK_TO_FAVORITE_DOGS_PAGE_CLICKED": 
         return {
           ...state,
           selectedBreed: null,

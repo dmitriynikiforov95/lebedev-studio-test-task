@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { compareRandom, sortAlphabetically } from "../../../helper";
+import { compareRandom, sortAlphabetically, getCurrentDogsImages } from "../../../helper";
 import {
   getDogsImagesConfig,
   getDogsImages,
@@ -18,16 +18,8 @@ class HomePageContainer extends Component {
     hasMore: true,
   };
 
-  getCurrentDogsImages = (images, getNewImages) => {
-    const { dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
-    let indexOfLastItem = dogsImagesCurrentPage * dogsImagesPerPage;
-    let indexOfFirstItem = indexOfLastItem - dogsImagesPerPage;
-    let dogsImages = images.slice(indexOfFirstItem, indexOfLastItem);
-    return getNewImages(dogsImages);
-  };
-
   getDogsImages = (getImages) => {
-    const { dogApiService, getDogsImagesConfig } = this.props;
+    const { dogApiService, getDogsImagesConfig, dogsImagesCurrentPage, dogsImagesPerPage } = this.props;
     dogApiService.getAllBreedsList().then((res) => {
       let breedsList = Object.keys(res.message);
 
@@ -44,7 +36,7 @@ class HomePageContainer extends Component {
           return responses;
         })
         .then((res) => {
-          return this.getCurrentDogsImages(res, getImages);
+          return getCurrentDogsImages(res, getImages, dogsImagesCurrentPage, dogsImagesPerPage);
         });
     });
   };
