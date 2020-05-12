@@ -1,7 +1,0 @@
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1160px;
-    margin: 0 auto;
-}
