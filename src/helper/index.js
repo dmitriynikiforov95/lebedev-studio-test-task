@@ -18,7 +18,7 @@ const getCurrentDogsImages = (
   let indexOfLastItem = dogsImagesCurrentPage * dogsImagesPerPage;
   let indexOfFirstItem = indexOfLastItem - dogsImagesPerPage;
   let dogsImages = images.slice(indexOfFirstItem, indexOfLastItem);
-  debugger;
+
   return getNewImages(dogsImages);
 };
 
