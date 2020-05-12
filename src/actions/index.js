@@ -100,5 +100,3 @@ export {
   getNewDogsImagesFromLS,
   changeDogsImagesSortValue,
 };
-
-// тест
