@@ -6,14 +6,9 @@ const initialState = {
 };
 
 const removeDogFromFavorites = (state, dogImageSrc) => {
-  const favoriteDogs = state.dogs.filter(
-    ({src}) => src !== dogImageSrc
-  );
+  const favoriteDogs = state.dogs.filter(({ src }) => src !== dogImageSrc);
 
-  localStorage.setItem(
-    "favoriteDogs",
-    JSON.stringify(favoriteDogs)
-  );
+  localStorage.setItem("favoriteDogs", JSON.stringify(favoriteDogs));
 
   return {
     ...state,
@@ -22,42 +17,34 @@ const removeDogFromFavorites = (state, dogImageSrc) => {
 };
 
 const toggleDogFavortites = (state, dogImageSrc) => {
-  const {dogs} = state;
-  
-  const dog = dogs.find(({src}) => src === dogImageSrc);
-  const dogIdx = dogs.findIndex(({src}) => src === dogImageSrc);
+  const { dogs } = state;
+
+  const dog = dogs.find(({ src }) => src === dogImageSrc);
+  const dogIdx = dogs.findIndex(({ src }) => src === dogImageSrc);
 
   let newFavoriteDog = {
     ...dog,
     isFavorite: true,
   };
-  
+
   let favoriteDogs = localStorage.getItem("favoriteDogs")
     ? JSON.parse(localStorage.getItem("favoriteDogs"))
     : [];
 
-  if (favoriteDogs.find(({src}) => src === dogImageSrc)) {
+  if (favoriteDogs.find(({ src }) => src === dogImageSrc)) {
     newFavoriteDog.isFavorite = false;
+    favoriteDogs = favoriteDogs.filter(({ src }) => src !== dogImageSrc);
+  } else {
+    favoriteDogs = [newFavoriteDog, ...favoriteDogs];
   }
+
+  localStorage.setItem("favoriteDogs", JSON.stringify(favoriteDogs));
 
   const newDogs = [
     ...dogs.slice(0, dogIdx),
     newFavoriteDog,
     ...dogs.slice(dogIdx + 1),
   ];
-
-  if (favoriteDogs.find(({src}) => src === dogImageSrc)) {
-    favoriteDogs = favoriteDogs.filter(
-      ({src}) => src !== dogImageSrc
-    );
-  } else {
-    favoriteDogs = [newFavoriteDog, ...favoriteDogs];
-  }
-
-  localStorage.setItem(
-    "favoriteDogs",
-    JSON.stringify(favoriteDogs)
-  );
 
   return {
     ...state,
@@ -69,7 +56,6 @@ const transformDogsImages = (dogsImages, currentBreed) => {
   if (currentBreed === "favorites") {
     return dogsImages;
   } else {
-    
     let transformedDogsImages = dogsImages.map((src) => {
       return {
         src,
@@ -79,12 +65,10 @@ const transformDogsImages = (dogsImages, currentBreed) => {
     });
 
     if (localStorage.getItem("favoriteDogs")) {
-      const favoriteDogs = JSON.parse(
-        localStorage.getItem("favoriteDogs")
-      );
+      const favoriteDogs = JSON.parse(localStorage.getItem("favoriteDogs"));
 
       for (let dog of transformedDogsImages) {
-        for (let {src} of favoriteDogs) {
+        for (let { src } of favoriteDogs) {
           if (dog.src === src) {
             dog.isFavorite = true;
           }
@@ -94,7 +78,6 @@ const transformDogsImages = (dogsImages, currentBreed) => {
     return transformedDogsImages;
   }
 };
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -118,12 +101,12 @@ const reducer = (state = initialState, action) => {
         ],
         isDogsImagesLoading: false,
       };
-      case "FETCH_DOGS_IMAGES_FAILURE":
-        return {
-          ...state,
-          isDogsImagesLoading: false,
-          isDogsImagesLoadingError: action.error
-        }
+    case "FETCH_DOGS_IMAGES_FAILURE":
+      return {
+        ...state,
+        isDogsImagesLoading: false,
+        isDogsImagesLoadingError: action.error,
+      };
     case "DOG_TOGGLED_FAVORITES":
       return toggleDogFavortites(state, action.dog);
     case "DOG_REMOVED_FROM_FAVORITES":
