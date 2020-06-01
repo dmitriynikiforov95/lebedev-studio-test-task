@@ -1,14 +1,15 @@
 import React from "react";
 import "./app.css";
-import AppHeaderContainer from "../../containers/app-header-container";
-import PagesContainer from "../../containers/pages-container/pages-container";
+
+import AppHeader from './../app-header';
+import Pages from './../pages/pages';
 
 const App = () => {
   return (
     <div>
-      <AppHeaderContainer />
-      <PagesContainer />
-    </div>
+      <AppHeader />
+     <Pages />
+     </div>
   );
 };
 

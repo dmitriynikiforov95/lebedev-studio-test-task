@@ -3,17 +3,8 @@ import s from "./doc-card-item.module.css";
 import active from "./active.png";
 import inactive from "./inactive.png";
 
-const DogCardItem = ({ dogImage, addDogImageToFavorites }) => {
-  const { src, isFavorite } = dogImage;
-
-  const addToFavorites = (url) => {
-    let dogImage = {
-      src: url,
-      isFavorite: true,
-    };
-    addDogImageToFavorites(dogImage);
-  };
-  let breedName = src.match(/.*\/(.*)\/(.*)$/)[1];
+const DogCardItem = ({ dog, toggleDogFavorites, currentBreed, removeDogFromFavorites }) => {
+  const { src, isFavorite, breed } = dog;
 
   return (
     <div className={s.container}>
@@ -22,9 +13,9 @@ const DogCardItem = ({ dogImage, addDogImageToFavorites }) => {
         className={s.favoriteIcon}
         src={isFavorite ? active : inactive}
         alt="favortie icon"
-        onClick={() => addToFavorites(src)}
+        onClick={currentBreed === "favorites" ? () => removeDogFromFavorites(src) : () => toggleDogFavorites(src)}
       />
-        <b className={s.breedName}>{breedName}</b>
+        <b className={s.breedName}>{breed}</b>
     </div>
   );
 };

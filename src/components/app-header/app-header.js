@@ -5,16 +5,16 @@ import s from "./app-header.module.css";
 import appLogo from "./app-logo.png";
 import favoritesIcon from "./favorites-icon.png";
 
-const AppHeader = ({toHomePage, toFavoriteDogsPage}) => {
+const AppHeader = () => {
   return (
     <header className={s.header}>
       <div className={s.container}>
-      <Link to="/" onClick={toHomePage}>
+      <Link to="/">
           <img src={appLogo} alt="app-logo" />
         </Link>
         <div>
           <span className={s.favoriteDogsLinkText}>Избранные песели</span>
-          <Link to="/favorites" onClick={toFavoriteDogsPage}>
+          <Link to="/favorites">
             <img src={favoritesIcon} alt="favorites-icon" />
           </Link>
         </div>

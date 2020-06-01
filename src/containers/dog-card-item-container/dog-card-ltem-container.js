@@ -1,12 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import DogCardItem from "../../components/dog-card-item";
-import {addDogImageToFavorites} from "../../actions";
+import {toggleDogFavorites, removeDogFromFavorites} from "../../actions";
 
-const DogCardItemContainer = ({ dogImage, addDogImageToFavorites}) => {
-  return <DogCardItem dogImage={dogImage} addDogImageToFavorites={addDogImageToFavorites}/>;
+const DogCardItemContainer = (props) => {
+  return <DogCardItem {...props}/>;
 };
 const mapDispatchToProps = {
-  addDogImageToFavorites
+  toggleDogFavorites,
+  removeDogFromFavorites,
 }
+
 export default connect(null, mapDispatchToProps)(DogCardItemContainer);

@@ -8,18 +8,33 @@ function sortAlphabetically(a, b) {
   return aa < bb ? -1 : aa > bb ? 1 : 0;
 }
 
-// rename 
-const getCurrentDogsImages = (
-  images,
-  getNewImages,
-  dogsImagesCurrentPage,
-  dogsImagesPerPage
-) => {
-  let indexOfLastItem = dogsImagesCurrentPage * dogsImagesPerPage;
-  let indexOfFirstItem = indexOfLastItem - dogsImagesPerPage;
-  let dogsImages = images.slice(indexOfFirstItem, indexOfLastItem);
-  debugger;
-  return getNewImages(dogsImages);
+
+const getBreedListWithCapitalLetters = (breedList) => {
+    
+  let letter = "";
+
+  let breedListWithCapitalLetters = breedList.map((item) => {
+    return {
+      value: item,
+      isCapitalLetter: false,
+    };
+  });
+
+  for (let i = 0; i < breedListWithCapitalLetters.length; i++) {
+    let capitalLetter = {
+      value: breedListWithCapitalLetters[i].value[0].toUpperCase(),
+      isCapitalLetter: true,
+    };
+    if (capitalLetter.value !== letter) {
+      letter = capitalLetter.value;
+      breedListWithCapitalLetters.splice(i, 0, capitalLetter);
+    }
+  }
+  letter = "";
+
+  return breedListWithCapitalLetters;
 };
 
-export { compareRandom, sortAlphabetically, getCurrentDogsImages };
+
+
+export { compareRandom, sortAlphabetically, getBreedListWithCapitalLetters };

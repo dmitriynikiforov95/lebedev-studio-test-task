@@ -1,54 +1,33 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { fetchBreedList } from "../../actions";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+import { getBreedListWithCapitalLetters } from "../../helper";
 import withDogApiService from "../../components/hoc";
-import BreedListContainer from "../breed-list-container";
-import SwitchBtnContainer from "../switch-btn-container";
+import BreedsSelector from "./../../components/breeds-selector/index";
 
-class BreedsSelectorContainer extends Component {
-  state = {
-    isBreedListOpened: false,
-  };
+const BreedsSelectorContainer = ({ dogApiService }) => {
+  const location = useLocation();
+  const currentBreed = location.pathname.slice(1);
 
-  openBreedList = () => {
-    this.setState(({ isBreedListOpened }) => {
-      return {
-        isBreedListOpened: !isBreedListOpened,
-      };
+  const [isBreedListOpened, setIsBreedListOpenedValue] = useState(false);
+  const [breedList, getBreedList] = useState([]);
+
+  useEffect(() => {
+    dogApiService.getAllBreedsList().then(({ message }) => {
+      const breedList = Object.keys(message);
+      getBreedList(getBreedListWithCapitalLetters(breedList));
     });
-  };
+  }, []);
 
-  componentDidMount() {
-    this.props.fetchBreedList();
-  }
-
-  render() {
-    const { isBreedListOpened } = this.state;
-    const {selectedBreed} = this.props;
-    return (
-      <div>
-        <button type="button" onClick={this.openBreedList}>
-          Породы
-        </button>
-        {isBreedListOpened && <BreedListContainer />}
-        {!selectedBreed && <SwitchBtnContainer />}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = ({ selectedBreed }) => {
-  return {
-    selectedBreed,
-  };
+  return (
+    <BreedsSelector
+      breedList={breedList}
+      setIsBreedListOpenedValue={setIsBreedListOpenedValue}
+      isBreedListOpened={isBreedListOpened}
+      currentBreed={currentBreed}
+    />
+  );
 };
 
-const mapDispatchToProps = (dispatch, { dogApiService }) => {
-  return {
-    fetchBreedList: fetchBreedList(dispatch, dogApiService),
-  };
-};
+export default withDogApiService(BreedsSelectorContainer);
 
-export default withDogApiService(
-  connect(mapStateToProps, mapDispatchToProps)(BreedsSelectorContainer)
-);

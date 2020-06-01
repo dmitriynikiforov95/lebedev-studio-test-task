@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {changeDogsImagesSortValue} from "../../actions";
+import {changeDogsSortingValue} from "../../actions";
 
 import SwitchBtn from "../../components/switch-btn";
 
-const SwitchBtnContainer = ({isSortDogsImagesAlphabetically, changeDogsImagesSortValue}) => {
+const SwitchBtnContainer = ({isSortDogsImagesAlphabetically, changeDogsSortingValue}) => {
   return <SwitchBtn 
-  changeDogsImagesSortValue={changeDogsImagesSortValue}
+  changeDogsSortingValue={changeDogsSortingValue}
   isSortDogsImagesAlphabetically={isSortDogsImagesAlphabetically} 
   />
 }
@@ -18,7 +18,7 @@ const mapStateToProps = ({ isSortDogsImagesAlphabetically }) => {
   };
   
   const mapDispatchToProps = {
-    changeDogsImagesSortValue,
+    changeDogsSortingValue,
   };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwitchBtnContainer)

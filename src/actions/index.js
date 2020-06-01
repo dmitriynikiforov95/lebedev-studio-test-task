@@ -1,102 +1,58 @@
-const toHomePage = () => {
+
+const dogsImagesRequest = () => {
   return {
-    type: "LINK_TO_HOMEPAGE_CLICKED",
+    type: "FETCH_DOGS_IMAGES_REQUEST",
+  };
+};
+const dogsImagesError = (error) => {
+  return {
+    type: "FETCH_DOGS_IMAGES_FAILURE",
+    error,
   };
 };
 
-const toFavoriteDogsPage = () => {
+const loadDogsImages = (images, page) => {
   return {
-    type: "LINK_TO_FAVORITE_DOGS_PAGE_CLICKED",
+    type: "FETCH_DOGS_IMAGES_SUCCESS",
+    images,
+    page,
   };
 };
 
-const getDogsImagesConfig = (img) => {
+const loadNewDogsImages = (images, page) => {
   return {
-    type: "DOGS_IMAGES_CONFING_GETTED",
-    payload: img,
+    type: "FETCH_NEW_DOGS_IMAGES_SUCCESS",
+    images,
+    page,
   };
 };
 
-const getDogsImages = (img) => {
+const toggleDogFavorites = (dogImageSrc) => {
   return {
-    type: "DOGS_IMAGES_GETTED",
-    payload: img,
+    type: "DOG_TOGGLED_FAVORITES",
+    dog: dogImageSrc,
   };
 };
 
-const getNewDogsImages = (img) => {
+const changeDogsSortingValue = () => {
   return {
-    type: "NEW_DOGS_IMAGES_GETTED",
-    payload: img,
+    type: "DOGS_SORTING_VALUE_CHANGED",
   };
 };
 
-const getBreedList = (breedList) => {
+const removeDogFromFavorites = (dogImageSrc) => {
   return {
-    type: "BREED_LIST_GETTED",
-    payload: breedList,
+    type: "DOG_REMOVED_FROM_FAVORITES",
+    dog: dogImageSrc,
   };
-};
-
-const changeDogsImagesCurrentPage = () => {
-  return {
-    type: "CHANGE_DOGS_IMAGES_CURRENT_PAGE",
-  };
-};
-
-const selectBreed = (breed) => {
-  return {
-    type: "BREED_SELECTED",
-    payload: breed,
-  };
-};
-
-// add dog images to ls logic
-
-const addDogImageToFavorites = (dogImage) => {
-  return {
-    type: "DOG_IMAGE_ADDED_TO_FAVORITES",
-    payload: dogImage,
-  };
-};
-
-const getDogsImagesFromLS = (img) => {
-  return {
-    type: "DOGS_IMAGES_FROM_LS_GETTED",
-    payload: img,
-  };
-};
-
-const getNewDogsImagesFromLS = (img) => {
-  return {
-    type: "NEW_DOGS_IMAGES_FROM_LS_GETTED",
-    payload: img,
-  };
-};
-
-const changeDogsImagesSortValue = () => {
-  return {
-    type: "DOGS_IMAGES_VALUE_CHANGED",
-  };
-};
-
-const fetchBreedList = (dispatch, dogApiService) => () => {
-  dogApiService
-    .getAllBreedsList()
-    .then((res) => dispatch(getBreedList(Object.keys(res.message))));
 };
 
 export {
-  toHomePage,
-  toFavoriteDogsPage,
-  getDogsImagesConfig,
-  getDogsImages,
-  getNewDogsImages,
-  fetchBreedList,
-  changeDogsImagesCurrentPage,
-  selectBreed,
-  addDogImageToFavorites,
-  getDogsImagesFromLS,
-  getNewDogsImagesFromLS,
-  changeDogsImagesSortValue,
+  dogsImagesRequest,
+  dogsImagesError,
+  loadDogsImages,
+  loadNewDogsImages,
+  toggleDogFavorites,
+  removeDogFromFavorites,
+  changeDogsSortingValue,
 };

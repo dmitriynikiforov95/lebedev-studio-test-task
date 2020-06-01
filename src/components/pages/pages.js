@@ -1,15 +1,20 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import HomePageContainer from "../../containers/pages-container/home-page-container";
-import SelectedBreedPageContainer from "../../containers/pages-container/selected-breed-page-container";
-import FavoriteDogsPageContainer from "../../containers/pages-container/favorite-dogs-page-container";
+import { useLocation } from "react-router-dom";
+import HomePage from './home-page/index';
+import FavoriteDogsPage from './favorite-dogs-page/favorite-dogs-page';
+import SelectedBreedPage from './selected-breed-page/selected-breed-page';
 
-const Pages = ({selectedBreed}) => {
+const Pages = () => {
+
+  const location = useLocation();
+  const path = location.pathname.slice(1);
+
   return (
     <Switch>
-      <Route path="/" exact component={HomePageContainer} />
-      <Route path={`/${selectedBreed}`} exact component={SelectedBreedPageContainer} />
-      <Route path={`/favorites`}  component={FavoriteDogsPageContainer} />
+      <Route path="/" exact component={HomePage} />
+      <Route path={`/favorites`} component={FavoriteDogsPage} />
+      <Route path={`/${path}`} component={SelectedBreedPage} />
     </Switch>
   );
 };
