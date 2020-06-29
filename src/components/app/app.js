@@ -6,10 +6,10 @@ import Pages from './../pages/pages';
 
 const App = () => {
   return (
-    <div>
+    <>
       <AppHeader />
-     <Pages />
-     </div>
+      <Pages />
+    </>
   );
 };
 

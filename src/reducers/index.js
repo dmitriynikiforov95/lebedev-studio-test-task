@@ -1,85 +1,48 @@
-const initialState = {
-  dogs: [],
-  isDogsImagesLoading: false,
-  isDogsImagesLoadingError: null,
-  isSortDogsImagesAlphabetically: false,
-};
+const searchDogBySrc = (dogImgSrc, condition) => ({src}) =>
+ (condition === "equality") ? src === dogImgSrc : src !== dogImgSrc;
 
-const removeDogFromFavorites = (state, dogImageSrc) => {
-  const favoriteDogs = state.dogs.filter(({ src }) => src !== dogImageSrc);
+const toggleDogFavorites = (state, dogImgSrc) => {
+  const {dogs, favoriteDogs} = state;
 
-  localStorage.setItem("favoriteDogs", JSON.stringify(favoriteDogs));
+  const dog = dogs.find(searchDogBySrc(dogImgSrc, "equality"));
+  const dogIdx = dogs.findIndex(searchDogBySrc(dogImgSrc, "equality"));
+ 
+  const toggledDog = Object.assign({}, dog);
+
+  let newFavoriteDogs;
+
+  if (favoriteDogs.find(searchDogBySrc(dogImgSrc, "equality"))) {
+    newFavoriteDogs = favoriteDogs.filter(searchDogBySrc(dogImgSrc));
+    toggledDog.isFavorite = false;
+  } else {
+    newFavoriteDogs = [toggledDog, ...favoriteDogs];
+    toggledDog.isFavorite = true;
+  }
 
   return {
     ...state,
-    dogs: favoriteDogs,
-  };
-};
-
-const toggleDogFavortites = (state, dogImageSrc) => {
-  const { dogs } = state;
-
-  const dog = dogs.find(({ src }) => src === dogImageSrc);
-  const dogIdx = dogs.findIndex(({ src }) => src === dogImageSrc);
-
-  let newFavoriteDog = {
-    ...dog,
-    isFavorite: true,
-  };
-
-  let favoriteDogs = localStorage.getItem("favoriteDogs")
-    ? JSON.parse(localStorage.getItem("favoriteDogs"))
-    : [];
-
-  if (favoriteDogs.find(({ src }) => src === dogImageSrc)) {
-    newFavoriteDog.isFavorite = false;
-    favoriteDogs = favoriteDogs.filter(({ src }) => src !== dogImageSrc);
-  } else {
-    favoriteDogs = [newFavoriteDog, ...favoriteDogs];
+    dogs: [...dogs.slice(0, dogIdx), toggledDog, ...dogs.slice(dogIdx + 1)],
+    favoriteDogs: newFavoriteDogs,
   }
 
-  localStorage.setItem("favoriteDogs", JSON.stringify(favoriteDogs));
-
-  const newDogs = [
-    ...dogs.slice(0, dogIdx),
-    newFavoriteDog,
-    ...dogs.slice(dogIdx + 1),
-  ];
-
-  return {
-    ...state,
-    dogs: newDogs,
-  };
 };
 
-const transformDogsImages = (dogsImages, currentBreed) => {
-  if (currentBreed === "favorites") {
-    return dogsImages;
-  } else {
-    let transformedDogsImages = dogsImages.map((src) => {
-      return {
-        src,
-        breed: src.match(/.*\/(.*)\/(.*)$/)[1],
-        isFavorite: false,
-      };
-    });
 
-    if (localStorage.getItem("favoriteDogs")) {
-      const favoriteDogs = JSON.parse(localStorage.getItem("favoriteDogs"));
+const transformDogsImages = (favoriteDogs, dogsImages) =>
+  dogsImages.map((dogImgSrc) => {
+    const isFavorite = favoriteDogs.find(searchDogBySrc(dogImgSrc, "equality"))
+      ? true
+      : false;
 
-      for (let dog of transformedDogsImages) {
-        for (let { src } of favoriteDogs) {
-          if (dog.src === src) {
-            dog.isFavorite = true;
-          }
-        }
-      }
-    }
-    return transformedDogsImages;
-  }
-};
+    return {
+      isFavorite,
+      src: dogImgSrc,
+      breed: dogImgSrc.match(/.*\/(.*)\/(.*)$/)[1],
+    };
+  });
 
-const reducer = (state = initialState, action) => {
+
+const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_DOGS_IMAGES_REQUEST":
       return {
@@ -89,15 +52,15 @@ const reducer = (state = initialState, action) => {
     case "FETCH_DOGS_IMAGES_SUCCESS":
       return {
         ...state,
-        dogs: transformDogsImages(action.images, action.page),
-        dogsLoading: false,
+        dogs: transformDogsImages(state.favoriteDogs, action.images),
+        isDogsImagesLoading: false,
       };
-    case "FETCH_NEW_DOGS_IMAGES_SUCCESS":
+    case "GET_NEW_DOGS_IMAGES":
       return {
         ...state,
         dogs: [
           ...state.dogs,
-          ...transformDogsImages(action.images, action.page),
+          ...transformDogsImages(state.favoriteDogs, action.images),
         ],
         isDogsImagesLoading: false,
       };
@@ -108,9 +71,12 @@ const reducer = (state = initialState, action) => {
         isDogsImagesLoadingError: action.error,
       };
     case "DOG_TOGGLED_FAVORITES":
-      return toggleDogFavortites(state, action.dog);
+      return toggleDogFavorites(state, action.dog);
     case "DOG_REMOVED_FROM_FAVORITES":
-      return removeDogFromFavorites(state, action.dog);
+      return {
+        ...state,
+        favoriteDogs: state.favoriteDogs.filter(searchDogBySrc(action.dog)),
+      };
     case "DOGS_SORTING_VALUE_CHANGED":
       return {
         ...state,

@@ -8,8 +8,15 @@
 .react-switch-bg {
     background:none !important;
 }
-
+.text {
+    margin-right:15px;
+}
 .text.active {
     color:#3C59F0;
 }
 
+.switch-btn-wrapper {
+    display: flex;
+    align-items: center;
+    margin:0;
+}

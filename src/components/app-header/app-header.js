@@ -9,13 +9,13 @@ const AppHeader = () => {
   return (
     <header className={s.header}>
       <div className={s.container}>
-      <Link to="/">
+      <Link to="/lebedev-studio">
           <img src={appLogo} alt="app-logo" />
         </Link>
         <div>
           <span className={s.favoriteDogsLinkText}>Избранные песели</span>
-          <Link to="/favorites">
-            <img src={favoritesIcon} alt="favorites-icon" />
+          <Link to="/lebedev-studio/favorites">
+            <img className={s.favoritesIcon} src={favoritesIcon} alt="favorites-icon" width="16" height="14"/>
           </Link>
         </div>
       </div>

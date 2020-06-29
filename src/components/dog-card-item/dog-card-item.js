@@ -8,7 +8,7 @@ const DogCardItem = ({ dog, toggleDogFavorites, currentBreed, removeDogFromFavor
 
   return (
     <div className={s.container}>
-      <img className={s.dogImg} src={`${src}`} alt="dog" />
+      <img className={s.dogImg} src={`${src}`} alt="dog" width="367" height="290"/>
       <img
         className={s.favoriteIcon}
         src={isFavorite ? active : inactive}

@@ -1,22 +1,19 @@
 import React from "react";
 import Switch from "react-switch";
+import classNames from 'classnames/bind';
 import "./switch-btn.css";
 
 const SwitchBtn = ({
   isSortDogsImagesAlphabetically,
   changeDogsSortingValue,
 }) => {
-  let switchClazz = "react-switch";
-  let textClazz = "text";
-
-  if (isSortDogsImagesAlphabetically) {
-    switchClazz += " active";
-    textClazz += " active";
-  }
 
   return (
-    <label>
-      <span className={textClazz}>Сортировка по алфавиту</span>
+    <div className="switch-btn-wrapper"> 
+      <span className={classNames({
+        text: true,
+        active: isSortDogsImagesAlphabetically
+      })}>Сортировка по алфавиту</span>
       <Switch
         checked={isSortDogsImagesAlphabetically}
         onChange={changeDogsSortingValue}
@@ -29,10 +26,13 @@ const SwitchBtn = ({
         checkedIcon={false}
         height={14.5}
         width={29}
-        className={switchClazz}
+        className={classNames({
+         "react-switch": true,
+         active: isSortDogsImagesAlphabetically
+        })}
         id="material-switch"
       />
-    </label>
+    </div>
   );
 };
 

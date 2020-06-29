@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import { dogsImagesError } from "../../actions";
 
 import { getBreedListWithCapitalLetters } from "../../helper";
 import withDogApiService from "../../components/hoc";
 import BreedsSelector from "./../../components/breeds-selector/index";
 
-const BreedsSelectorContainer = ({ dogApiService }) => {
-  const location = useLocation();
-  const currentBreed = location.pathname.slice(1);
-
+const BreedsSelectorContainer = ({ breed, dogApiService, dogsImagesError }) => {
   const [isBreedListOpened, setIsBreedListOpenedValue] = useState(false);
   const [breedList, getBreedList] = useState([]);
 
   useEffect(() => {
-    dogApiService.getAllBreedsList().then(({ message }) => {
-      const breedList = Object.keys(message);
-      getBreedList(getBreedListWithCapitalLetters(breedList));
-    });
-  }, []);
+    dogApiService
+      .getAllBreedsList()
+      .then(({ message }) => {
+        const breedList = Object.keys(message);
+        getBreedList(getBreedListWithCapitalLetters(breedList));
+      })
+      .catch((error) => {
+        dogsImagesError(error.message);
+      });
+  }, [dogApiService, dogsImagesError]);
 
   return (
     <BreedsSelector
       breedList={breedList}
       setIsBreedListOpenedValue={setIsBreedListOpenedValue}
       isBreedListOpened={isBreedListOpened}
-      currentBreed={currentBreed}
+      currentBreed={breed}
     />
   );
 };
 
-export default withDogApiService(BreedsSelectorContainer);
+const mapDispatchToProps = {
+  dogsImagesError,
+};
 
+export default withDogApiService(
+  connect(null, mapDispatchToProps)(BreedsSelectorContainer)
+);

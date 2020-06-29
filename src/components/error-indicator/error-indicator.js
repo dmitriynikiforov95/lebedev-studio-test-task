@@ -1,8 +1,9 @@
 import React from "react";
+import s from "./error-indicator.module.css";
 
 const ErrorIndicator = () => {
     return (
-        <div>
+        <div className={s.container}>
             The error has been detected!
         </div>
 

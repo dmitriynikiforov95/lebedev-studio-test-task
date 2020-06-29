@@ -19,11 +19,10 @@ const loadDogsImages = (images, page) => {
   };
 };
 
-const loadNewDogsImages = (images, page) => {
+const loadNewDogsImages = (images) => {
   return {
-    type: "FETCH_NEW_DOGS_IMAGES_SUCCESS",
+    type: "GET_NEW_DOGS_IMAGES",
     images,
-    page,
   };
 };
 

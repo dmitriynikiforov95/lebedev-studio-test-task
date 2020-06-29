@@ -1,10 +1,28 @@
 export default class DogApiService {
+  
   async getAllBreedsList() {
-    const res = await fetch("https://dog.ceo/api/breeds/list/all");
+    const apiBase = "https://dog.ceo/api/breeds/list/all";
+
+    const res = await fetch(apiBase);
+   
+    if (!res.ok) {
+      throw new Error(`Could not fetch  ${apiBase} +
+                , received ${res.status}`);
+    }
+
     return await res.json();
   }
+
   async getBreedImages(url) {
-    const res = await fetch(`https://dog.ceo/api/breed/${url}/images`);
+    const apiBase = `https://dog.ceo/api/breed/${url}/images`;
+
+    const res = await fetch(apiBase);
+    if (!res.ok) {
+      throw new Error(`Could not fetch  ${apiBase} +
+                , received ${res.status}`);
+    }
+    
     return await res.json();
   }
+
 }

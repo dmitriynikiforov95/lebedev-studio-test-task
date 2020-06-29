@@ -1,0 +1,33 @@
+.centeringСontainer {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  margin: 0 -10px;
+}
+
+.favoritesPageContainer {
+  margin-top: 30px;
+}
+
+.item-enter {
+  opacity: 0;
+}
+
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.item-exit {
+  opacity: 1;
+}
+
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

@@ -1,19 +1,29 @@
 import React from "react";
-
 import s from "./breed-list.module.css"
 import BreedListItem from './../breed-list-item/breed-list-item';
+
 const BreedList = ({ breedList }) => {
+
   return (
-    <ul className={s.list}>
-      {breedList.map((item, idx) => {
+    <div className={s.list}>
+      {breedList.map(({ breeds, letter }, idx) => {
         return (
-          <li key={idx}>
-            <BreedListItem breed={item} />
-          </li>
-        );
+          <span key={idx}>
+            {breeds.map((breed, idx) => {
+              if (idx === 0) {
+                return (
+                  <span className={s.nowrap}>
+                    <span className={s.capitalLetter}>{letter.toUpperCase()}</span>
+                    <BreedListItem breed={breed} />
+                  </span>)
+              }
+              return <BreedListItem breed={breed} />
+            })}
+          </span>
+        )
       })}
-    </ul>
-  );
-};
+    </div>
+  )
+}
 
 export default BreedList;

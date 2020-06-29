@@ -2,16 +2,21 @@
   "name": "lebedev-studio-test-task",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dmitriynikiforov95.github.io/lebedev-studio",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "classnames": "^2.2.6",
+    "lodash.throttle": "^4.1.1",
     "react": "^16.13.1",
+    "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
     "react-infinite-scroll-component": "^5.0.4",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
     "react-switch": "^5.0.1",
+    "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8"
   },
@@ -19,6 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -28,12 +35,17 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie >= 9"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "ie 11"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.1.0"
   }
 }

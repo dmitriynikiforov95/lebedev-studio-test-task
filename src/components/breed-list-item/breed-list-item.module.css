@@ -1,29 +1,22 @@
-.capitalLetter {
-    margin-right: 15px;
-    margin-left: 35px;
-    font-size: 20px;
-    line-height: 28px;
-    border: none;
+
+.breedLink {
+  display:inline-block;
+  margin:12px 0;
+  margin-right: 15px;
+  padding: 4px 12px;
+  border: 1px solid #626262;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 16px;
+  color: inherit;
+  letter-spacing: 0.01em;
+  transition: all 0.4s;
 }
 
-li:first-child .capitalLetter {
-    margin-left: 0px;
+.breedLink:hover {
+  color: #3c59f0;
+  border: 1px solid #3c59f0;
 }
 
-.link {
-    margin-right:15px;
-    padding: 4px 12px;
-    border: 1px solid #626262;
-    border-radius: 20px;
-    text-align:center;
-
-    text-decoration: none;
-    font-family: inherit;
-    font-style: inherit;
-    font-weight: inherit;
-    color: inherit;
-}
-.link:hover {
-    color: #3C59F0;
-    border: 1px solid #3C59F0;
-} 
