@@ -1,17 +1,19 @@
-const searchDogBySrc = (dogImgSrc, condition) => ({src}) =>
- (condition === "equality") ? src === dogImgSrc : src !== dogImgSrc;
+const EQUALITY = "equality";
+
+const searchDogBySrc = (dogImgSrc, condition) => ({ src }) =>
+  (condition === "equality") ? src === dogImgSrc : src !== dogImgSrc;
 
 const toggleDogFavorites = (state, dogImgSrc) => {
-  const {dogs, favoriteDogs} = state;
+  const { dogs, favoriteDogs } = state;
 
-  const dog = dogs.find(searchDogBySrc(dogImgSrc, "equality"));
-  const dogIdx = dogs.findIndex(searchDogBySrc(dogImgSrc, "equality"));
- 
+  const dog = dogs.find(searchDogBySrc(dogImgSrc, EQUALITY));
+  const dogIdx = dogs.findIndex(searchDogBySrc(dogImgSrc, EQUALITY));
+
   const toggledDog = Object.assign({}, dog);
 
   let newFavoriteDogs;
 
-  if (favoriteDogs.find(searchDogBySrc(dogImgSrc, "equality"))) {
+  if (favoriteDogs.find(searchDogBySrc(dogImgSrc, EQUALITY))) {
     newFavoriteDogs = favoriteDogs.filter(searchDogBySrc(dogImgSrc));
     toggledDog.isFavorite = false;
   } else {
@@ -30,7 +32,7 @@ const toggleDogFavorites = (state, dogImgSrc) => {
 
 const transformDogsImages = (favoriteDogs, dogsImages) =>
   dogsImages.map((dogImgSrc) => {
-    const isFavorite = favoriteDogs.find(searchDogBySrc(dogImgSrc, "equality"))
+    const isFavorite = favoriteDogs.find(searchDogBySrc(dogImgSrc, EQUALITY))
       ? true
       : false;
 
@@ -55,6 +57,12 @@ const reducer = (state, action) => {
         dogs: transformDogsImages(state.favoriteDogs, action.images),
         isDogsImagesLoading: false,
       };
+    case "FETCH_DOGS_IMAGES_FAILURE":
+      return {
+        ...state,
+        isDogsImagesLoading: false,
+        isDogsImagesLoadingError: action.error,
+      };
     case "GET_NEW_DOGS_IMAGES":
       return {
         ...state,
@@ -63,12 +71,6 @@ const reducer = (state, action) => {
           ...transformDogsImages(state.favoriteDogs, action.images),
         ],
         isDogsImagesLoading: false,
-      };
-    case "FETCH_DOGS_IMAGES_FAILURE":
-      return {
-        ...state,
-        isDogsImagesLoading: false,
-        isDogsImagesLoadingError: action.error,
       };
     case "DOG_TOGGLED_FAVORITES":
       return toggleDogFavorites(state, action.dog);
