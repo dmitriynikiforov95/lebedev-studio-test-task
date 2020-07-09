@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -13,8 +12,8 @@ import withDogApiService from "../../components/hoc";
 
 import { compareRandom, sortAlphabetically } from "../../helper";
 import ErrorIndicator from "./../../components/error-indicator/error-indicator";
-import Spinner from './../../components/spinner/spinner';
-import SearchHint from './../../components/search-hint/search-hint';
+import Spinner from "./../../components/spinner/spinner";
+import SearchHint from "./../../components/search-hint/search-hint";
 
 const DogCardListContainer = ({
   dogApiService,
@@ -27,31 +26,26 @@ const DogCardListContainer = ({
   isDogsImagesLoadingError,
   breed,
 }) => {
-
-
   const [dogsTotalLength, getDogsTotalLength] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-
 
   let isFetchCancelled = false;
 
   const dogsPerPage = 15;
 
-  const sliceDogImages = (dogApiImages) => dogApiImages.slice(0, page * dogsPerPage);
+  const sliceDogImages = (dogApiImages) =>
+    dogApiImages.slice(0, page * dogsPerPage);
 
-  const sortDogImages = (dogs, isSortAlphabetically) => {
-    let sortedDogs = dogs.slice();
+  const sortDogImages = (dogs, isSortAlphabetically) =>
+    isSortAlphabetically ? dogs.slice().sort(sortAlphabetically) : dogs;
 
-    if (isSortAlphabetically) {
-      return sortedDogs.sort(sortAlphabetically);
-    }
-    return sortedDogs;
-  };
+  let slicedDogs =
+    breed === "favorites" ? sliceDogImages(favoriteDogs) : sliceDogImages(dogs);
 
-  let slicedDogs = (breed === "favorites") ? sliceDogImages(favoriteDogs) : sliceDogImages(dogs);
+  const isHomePage = !breed;
 
-  if (!breed) {
+  if (isHomePage) {
     slicedDogs = sortDogImages(slicedDogs, isSortDogsImagesAlphabetically);
   }
 
@@ -73,7 +67,8 @@ const DogCardListContainer = ({
 
   const getDogsImagesAllBreeds = (getImages) => {
     dogsImagesRequest();
-    dogApiService.getAllBreedsList()
+    dogApiService
+      .getAllBreedsList()
       .then(({ message }) => {
         const breedsList = Object.keys(message);
 
@@ -91,12 +86,11 @@ const DogCardListContainer = ({
           })
           .then((dogsImages) => {
             !isFetchCancelled && getImages(dogsImages);
-          })
+          });
       })
       .catch((error) => {
         dogsImagesError(error.message);
       });
-
   };
 
   useEffect(() => {
@@ -123,9 +117,8 @@ const DogCardListContainer = ({
     }
     return () => {
       isFetchCancelled = true;
-    }
+    };
   }, [page, breed]);
-
 
   const loadMoreDogsImages = () => {
     if (isDogsImagesLoading) {
@@ -160,15 +153,13 @@ const mapStateToProps = ({
   isDogsImagesLoading,
   isDogsImagesLoadingError,
   isSortDogsImagesAlphabetically,
-}) => {
-  return {
-    favoriteDogs,
-    isDogsImagesLoading,
-    isDogsImagesLoadingError,
-    dogs,
-    isSortDogsImagesAlphabetically
-  };
-};
+}) => ({
+  favoriteDogs,
+  isDogsImagesLoading,
+  isDogsImagesLoadingError,
+  dogs,
+  isSortDogsImagesAlphabetically,
+});
 
 const mapDispatchToProps = {
   loadDogsImages,

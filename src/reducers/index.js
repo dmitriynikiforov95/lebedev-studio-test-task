@@ -1,35 +1,46 @@
-const EQUALITY = "equality";
+import { EQUALITY } from "../helper";
 
 const getDogSearchingConditionBySrc = (dogImgSrc, condition) => ({ src }) =>
-  (condition === "equality") ? src === dogImgSrc : src !== dogImgSrc;
+  condition === "equality" ? src === dogImgSrc : src !== dogImgSrc;
 
 const toggleDogFavorites = (state, dogImgSrc) => {
   const { dogs, favoriteDogs } = state;
 
-  const selectedDog = dogs.find(getDogSearchingConditionBySrc(dogImgSrc, EQUALITY));
-  const selectedDogIdx = dogs.findIndex(getDogSearchingConditionBySrc(dogImgSrc, EQUALITY));
-
-  const isSelectedDogAlrdyFavorite = favoriteDogs.find(getDogSearchingConditionBySrc(dogImgSrc, EQUALITY));
+  const selectedDog = dogs.find(
+    getDogSearchingConditionBySrc(dogImgSrc, EQUALITY)
+  );
+  const selectedDogIdx = dogs.findIndex(
+    getDogSearchingConditionBySrc(dogImgSrc, EQUALITY)
+  );
+  const isSelectedDogAlrdyFavorite = favoriteDogs.find(
+    getDogSearchingConditionBySrc(dogImgSrc, EQUALITY)
+  );
 
   const toggledSelectedDog = {
     ...selectedDog,
-    isFavorite: isSelectedDogAlrdyFavorite ? false : true
-  }
+    isFavorite: isSelectedDogAlrdyFavorite ? false : true,
+  };
 
-  const newFavoriteDogs = isSelectedDogAlrdyFavorite ?
-    favoriteDogs.filter(getDogSearchingConditionBySrc(dogImgSrc)) :
-    [toggledSelectedDog, ...favoriteDogs]
+  const newFavoriteDogs = isSelectedDogAlrdyFavorite
+    ? favoriteDogs.filter(getDogSearchingConditionBySrc(dogImgSrc))
+    : [toggledSelectedDog, ...favoriteDogs];
 
   return {
     ...state,
-    dogs: [...dogs.slice(0, selectedDogIdx), toggledSelectedDog, ...dogs.slice(selectedDogIdx + 1)],
+    dogs: [
+      ...dogs.slice(0, selectedDogIdx),
+      toggledSelectedDog,
+      ...dogs.slice(selectedDogIdx + 1),
+    ],
     favoriteDogs: newFavoriteDogs,
-  }
-}
+  };
+};
 
 const transformDogsImages = (favoriteDogs, dogsImages) =>
   dogsImages.map((dogImgSrc) => {
-    const isFavorite = favoriteDogs.find(getDogSearchingConditionBySrc(dogImgSrc, EQUALITY))
+    const isFavorite = favoriteDogs.find(
+      getDogSearchingConditionBySrc(dogImgSrc, EQUALITY)
+    )
       ? true
       : false;
 
@@ -39,7 +50,6 @@ const transformDogsImages = (favoriteDogs, dogsImages) =>
       breed: dogImgSrc.match(/.*\/(.*)\/(.*)$/)[1],
     };
   });
-
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -60,21 +70,14 @@ const reducer = (state, action) => {
         isDogsImagesLoading: false,
         isDogsImagesLoadingError: action.error,
       };
-    case "GET_NEW_DOGS_IMAGES":
-      return {
-        ...state,
-        dogs: [
-          ...state.dogs,
-          ...transformDogsImages(state.favoriteDogs, action.images),
-        ],
-        isDogsImagesLoading: false,
-      };
     case "DOG_TOGGLED_FAVORITES":
       return toggleDogFavorites(state, action.dog);
     case "DOG_REMOVED_FROM_FAVORITES":
       return {
         ...state,
-        favoriteDogs: state.favoriteDogs.filter(getDogSearchingConditionBySrc(action.dog)),
+        favoriteDogs: state.favoriteDogs.filter(
+          getDogSearchingConditionBySrc(action.dog)
+        ),
       };
     case "DOGS_SORTING_VALUE_CHANGED":
       return {

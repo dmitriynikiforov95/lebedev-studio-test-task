@@ -1,7 +1,6 @@
-
 .breedLink {
-  display:inline-block;
-  margin:12px 0;
+  display: inline-block;
+  margin: 12px 0;
   margin-right: 15px;
   padding: 4px 12px;
   border: 1px solid #626262;
@@ -19,4 +18,3 @@
   color: #3c59f0;
   border: 1px solid #3c59f0;
 }
-

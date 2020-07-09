@@ -1,24 +1,29 @@
 .header {
-    background: #151419;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.55);
+  background: #151419;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.55);
+}
+
+.appLogo {
+  width: 118px;
+  height: 27px;
 }
 
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 1200px;
-    margin: 0 auto;
-    padding:0 20px;
-    padding-top:35px;
-    padding-bottom:38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  padding-top: 35px;
+  padding-bottom: 38px;
 }
 
 .favoriteDogsLinkText {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .favoritesIcon {
-    width:16px;
-    height:14px;
+  width: 16px;
+  height: 14px;
 }

@@ -14,11 +14,9 @@ const SwitchBtnContainer = ({
   />
 );
 
-const mapStateToProps = ({ isSortDogsImagesAlphabetically }) => {
-  return {
-    isSortDogsImagesAlphabetically,
-  };
-};
+const mapStateToProps = ({ isSortDogsImagesAlphabetically }) => ({
+  isSortDogsImagesAlphabetically,
+})
 
 const mapDispatchToProps = {
   changeDogsSortingValue,

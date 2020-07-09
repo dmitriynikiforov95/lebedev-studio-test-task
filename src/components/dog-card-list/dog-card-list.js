@@ -1,11 +1,16 @@
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import classNames from 'classnames/bind';
+import classNames from "classnames/bind";
 import DogCardItemContainer from "../../containers/dog-card-item-container";
 import "./dog-card-list.css";
 
-const DogCardList = ({ dogs, currentBreed }) => {
-  const content = (
+const DogCardList = ({ dogs, currentBreed }) => (
+  <div
+    className={classNames({
+      centeringСontainer: true,
+      favoritesPageContainer: currentBreed === "favorites",
+    })}
+  >
     <TransitionGroup className="container">
       {dogs.map((item) => (
         <CSSTransition key={item.src} timeout={500} classNames="item">
@@ -13,18 +18,7 @@ const DogCardList = ({ dogs, currentBreed }) => {
         </CSSTransition>
       ))}
     </TransitionGroup>
-  );
-
-  return (
-    <div
-      className={classNames({
-        centeringСontainer: true,
-        favoritesPageContainer: currentBreed === "favorites",
-      })}
-    >
-      {content}
-    </div>
-  );
-};
+  </div>
+);
 
 export default DogCardList;

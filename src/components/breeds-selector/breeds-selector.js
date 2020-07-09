@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 import BreedList from "./../breed-list/index";
 import SwitchBtnContainer from "./../../containers/switch-btn-container/switch-btn-container";
-import classNames from 'classnames/bind';
+import classNames from "classnames/bind";
 import s from "./breeds-selector.module.css";
 
 const BreedsSelector = ({
@@ -11,7 +11,6 @@ const BreedsSelector = ({
   isBreedListOpened,
   currentBreed,
 }) => {
-  
   let cx = classNames.bind(s);
 
   const contentRef = useRef(null);
@@ -41,10 +40,12 @@ const BreedsSelector = ({
               }
             >
               Породы
-              <i className={cx({
-                arrow: true,
-                arrowActive: isBreedListOpened
-              })}></i>
+              <i
+                className={cx({
+                  arrow: true,
+                  arrowActive: isBreedListOpened,
+                })}
+              ></i>
             </span>
             {!currentBreed && <SwitchBtnContainer />}
           </div>
